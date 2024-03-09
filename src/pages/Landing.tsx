@@ -2,9 +2,13 @@ import { Text, Heading, Select, Center, Box, Button } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import useSetSizeSelector from "../store/selector/useSetSizeSelector";
 import { Link } from "react-router-dom";
+import useGenerateNewTable from "../store/selector/useGenerateNewTable";
+import { useStore } from "../store/Store";
 
 export default function Landing() {
+  const { size } = useStore();
   const updateSize = useSetSizeSelector();
+  const generateTable = useGenerateNewTable();
 
   return (
     <Box
@@ -32,6 +36,7 @@ export default function Landing() {
           bg="transparent"
           border="1px solid black"
           outline="none"
+          defaultValue={size}
         >
           <option value={4}>4x4</option>
           <option value={5}>5x5</option>
@@ -40,7 +45,7 @@ export default function Landing() {
           <option value={8}>8x8</option>
         </Select>
       </Center>
-      <Link to="/play">
+      <Link to="/play" onClick={(e) => generateTable()}>
         <Button
           rightIcon={<ArrowForwardIcon />}
           bg="transparent"

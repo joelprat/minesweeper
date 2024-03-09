@@ -1,8 +1,5 @@
 import { CellStatus, CellType } from "../cell/CellType";
-
-export interface GameTableType {
-  cells: CellType[][];
-}
+import { startDFS } from "../../utils/DFS";
 
 export const generateFinalGameTable = (
   size: number,
@@ -16,6 +13,8 @@ export const generateFinalGameTable = (
       const cell: CellType = {
         status: CellStatus.notOpen,
         value: value,
+        x: rIndex,
+        y: cIndex,
       };
 
       return cell;
@@ -94,4 +93,10 @@ const calculateNumberOfBombs = (
   return counter;
 };
 
-export const gameCicle = (table: CellType[][], x: number, y: number) => {};
+export const gameCicle = (table: CellType[][], x: number, y: number) => {
+  if (table[x][y].value === -1) return false;
+
+  if (table[x][y].value === 0) {
+    startDFS(table, x, y);
+  }
+};

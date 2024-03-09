@@ -1,19 +1,13 @@
 import React from "react";
-import useSizeSelector from "../../store/selector/useSizeSelector";
-import {
-  generateBombsCoords,
-  generateFinalGameTable,
-  updateValuesWithNumberOfBombs,
-} from "./GameTableType";
 import Cell from "../cell/Cell";
 import { Box } from "@chakra-ui/react";
+import { CellType } from "../cell/CellType";
 
-export default function GameTable() {
-  const size = useSizeSelector();
-  const bombsCoords = generateBombsCoords(size);
-  const finalGameTable = generateFinalGameTable(size, bombsCoords);
-  updateValuesWithNumberOfBombs(finalGameTable, size);
+interface GameTableProps {
+  table: CellType[][];
+}
 
+export default function GameTable(props: GameTableProps) {
   return (
     <Box
       display="flex"
@@ -23,7 +17,7 @@ export default function GameTable() {
       width="95%"
       height="95%"
     >
-      {finalGameTable.map((column, cIndex) => (
+      {props.table.map((column, cIndex) => (
         <Box
           display="flex"
           flexDirection="column"

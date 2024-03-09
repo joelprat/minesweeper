@@ -3,10 +3,14 @@ import { CellStatus, CellType } from "./CellType";
 import { Box, Text } from "@chakra-ui/react";
 import Flag from "../../assets/Flag";
 import Bomb from "../../assets/Bomb";
+import useGameCicle from "../../store/selector/useGameCicle";
 
 export default function Cell(props: CellType) {
+  const gameCicle = useGameCicle();
   const [state, setState] = useState<CellStatus>(props.status);
-  const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const [isOpen, setIsOpen] = useState<Boolean>(
+    props.status !== CellStatus.notOpen
+  );
   const bgColors = {
     0: "rgba(0,0,0, 0.65)",
     1: "rgba(255,255,255,0.1)",
@@ -37,6 +41,8 @@ export default function Cell(props: CellType) {
     } else {
       setState(CellStatus.bomb);
     }
+
+    gameCicle(props.x, props.y);
   };
 
   return (
@@ -69,7 +75,7 @@ export default function Cell(props: CellType) {
       {state === CellStatus.marked && <Flag />}
       {state === CellStatus.bomb && <Bomb />}
       {props.value !== undefined && props.value > 0 && isOpen && (
-        <Text fontSize={30}>{props.value}</Text>
+        <Text fontSize="1rem">{props.value}</Text>
       )}
     </Box>
   );
