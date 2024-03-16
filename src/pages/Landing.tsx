@@ -4,11 +4,17 @@ import useSetSizeSelector from "../store/selector/useSetSizeSelector";
 import { Link } from "react-router-dom";
 import useGenerateNewTable from "../store/selector/useGenerateNewTable";
 import { useStore } from "../store/Store";
+import { useEffect } from "react";
 
 export default function Landing() {
-  const { size } = useStore();
+  const { size, updateGameOver } = useStore();
   const updateSize = useSetSizeSelector();
   const generateTable = useGenerateNewTable();
+
+  useEffect(() => {
+    generateTable();
+    updateGameOver(false);
+  }, []);
 
   return (
     <Box

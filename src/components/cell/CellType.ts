@@ -1,13 +1,12 @@
 export interface CellType {
   status: CellStatus;
-  value: number;
+  value: number; //bomb -1
   x: number;
   y: number;
 }
 
 export enum CellStatus {
-  notOpen,
-  empty,
-  bomb,
+  open,
+  close,
   marked,
 }

@@ -11,7 +11,7 @@ export const generateFinalGameTable = (
         ? -1
         : 0;
       const cell: CellType = {
-        status: CellStatus.notOpen,
+        status: CellStatus.close,
         value: value,
         x: rIndex,
         y: cIndex,

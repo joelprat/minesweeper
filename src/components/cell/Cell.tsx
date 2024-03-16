@@ -1,47 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import { CellStatus, CellType } from "./CellType";
 import { Box, Text } from "@chakra-ui/react";
 import Flag from "../../assets/Flag";
 import Bomb from "../../assets/Bomb";
 import useGameCicle from "../../store/selector/useGameCicle";
+import { useStore } from "../../store/Store";
 
 export default function Cell(props: CellType) {
+  const { updateTable } = useStore();
   const gameCicle = useGameCicle();
-  const [state, setState] = useState<CellStatus>(props.status);
-  const [isOpen, setIsOpen] = useState<Boolean>(
-    props.status !== CellStatus.notOpen
-  );
   const bgColors = {
-    0: "rgba(0,0,0, 0.65)",
-    1: "rgba(255,255,255,0.1)",
-    2: "rgba(255, 45, 45,0.75)",
-    3: "rgba(87, 210, 150, 0.85)",
+    0: "rgba(255,255,255,0.1)",
+    1: "rgba(0,0,0, 0.65)",
+    2: "rgba(87, 210, 150, 0.85)",
+    3: "rgba(255, 45, 45,0.75)",
   };
 
   const handleRightClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     e.preventDefault();
-    if (state !== CellStatus.marked && state !== CellStatus.notOpen) {
-      return;
-    }
-    setState(
-      state === CellStatus.marked ? CellStatus.notOpen : CellStatus.marked
-    );
+    if (props.status === CellStatus.open) return;
+    updateTable((prev) => {
+      const newTable = [...prev];
+      newTable[props.x][props.y].status =
+        props.status === CellStatus.marked
+          ? CellStatus.close
+          : CellStatus.marked;
+      return newTable;
+    });
   };
 
   const handleLeftClick = () => {
-    if (state === CellStatus.marked || state === CellStatus.empty) {
+    if (
+      props.status === CellStatus.marked ||
+      props.status === CellStatus.open
+    ) {
       return;
     }
-
-    setIsOpen(true);
-    if (props.value !== undefined && props.value >= 0) {
-      setState(CellStatus.empty);
-    } else {
-      setState(CellStatus.bomb);
-    }
-
     gameCicle(props.x, props.y);
   };
 
@@ -52,19 +48,20 @@ export default function Cell(props: CellType) {
       h="100%"
       margin={3}
       borderRadius={15}
-      bg={bgColors[state]}
+      bg={
+        props.value === -1 && props.status === CellStatus.open
+          ? bgColors[3]
+          : bgColors[props.status]
+      }
       display="flex"
       alignItems="center"
       justifyContent="center"
       transition="0.5s"
       _hover={{
-        bg:
-          isOpen || state === CellStatus.marked
-            ? ""
-            : "rgba(255,255,255, 0.25)",
-        cursor: !isOpen ? "pointer" : "",
+        bg: props.status !== CellStatus.close ? "" : "rgba(255,255,255, 0.25)",
+        cursor: props.status === CellStatus.close ? "pointer" : "",
         boxShadow:
-          state === CellStatus.notOpen
+          props.status === CellStatus.close
             ? "0px 0px 2.5px rgba(255,255,255, 0.75)"
             : "",
       }}
@@ -72,11 +69,13 @@ export default function Cell(props: CellType) {
       onContextMenu={(e) => handleRightClick(e)}
       onClick={(e) => handleLeftClick()}
     >
-      {state === CellStatus.marked && <Flag />}
-      {state === CellStatus.bomb && <Bomb />}
-      {props.value !== undefined && props.value > 0 && isOpen && (
-        <Text fontSize="1rem">{props.value}</Text>
-      )}
+      {props.status === CellStatus.marked && <Flag />}
+      {props.status === CellStatus.open && props.value === -1 && <Bomb />}
+      {props.value !== undefined &&
+        props.value > 0 &&
+        props.status === CellStatus.open && (
+          <Text fontSize="1rem">{props.value}</Text>
+        )}
     </Box>
   );
 }

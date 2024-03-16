@@ -4,5 +4,9 @@ export interface StoreType {
   size: number;
   updateSize: (newSize: number) => void;
   table: CellType[][];
-  updateTable: (newTable: CellType[][]) => void;
+  updateTable: React.Dispatch<React.SetStateAction<CellType[][]>>;
+  isGameOver: boolean;
+  updateGameOver: (game: boolean) => void;
+  numberOfOpenedCells: number;
+  updateNumberOfOpenedCells: (numCells: number) => void;
 }

@@ -3,12 +3,10 @@ import {
   generateFinalGameTable,
   updateValuesWithNumberOfBombs,
 } from "../../components/table/GameTableType";
-import useSizeSelector from "./useSizeSelector";
 import { useStore } from "../Store";
 
 export default function useGenerateNewTable() {
-  const size = useSizeSelector();
-  const { updateTable } = useStore();
+  const { updateTable, size } = useStore();
 
   const generateNewTable = () => {
     const bombsCoords = generateBombsCoords(size);
