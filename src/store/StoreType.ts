@@ -8,5 +8,5 @@ export interface StoreType {
   isGameOver: boolean;
   updateGameOver: (game: boolean) => void;
   numberOfOpenedCells: number;
-  updateNumberOfOpenedCells: (numCells: number) => void;
+  updateNumberOfOpenedCells: React.Dispatch<React.SetStateAction<number>>;
 }

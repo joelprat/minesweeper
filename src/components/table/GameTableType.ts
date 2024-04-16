@@ -92,11 +92,3 @@ const calculateNumberOfBombs = (
 
   return counter;
 };
-
-export const gameCicle = (table: CellType[][], x: number, y: number) => {
-  if (table[x][y].value === -1) return false;
-
-  if (table[x][y].value === 0) {
-    startDFS(table, x, y);
-  }
-};
