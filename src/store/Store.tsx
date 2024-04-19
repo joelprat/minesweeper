@@ -14,7 +14,16 @@ export function ContextProvider({ children }: ContextProviderProps) {
   const [size, setSize] = useState<number>(4);
   const [table, setTable] = useState<CellType[][]>(initialTable);
   const [isGameOver, setGameOver] = useState<boolean>(false);
+  const [isWin, setWin] = useState<boolean>(false);
   const [numberOfOpenedCells, setNumberOfOpenedCells] = useState<number>(0);
+
+  const resetStates = () => {
+    setSize(4);
+    setTable(initialTable);
+    setGameOver(false);
+    setWin(false);
+    setNumberOfOpenedCells(0);
+  };
 
   const contextValues = {
     size,
@@ -25,6 +34,9 @@ export function ContextProvider({ children }: ContextProviderProps) {
     updateGameOver: setGameOver,
     numberOfOpenedCells,
     updateNumberOfOpenedCells: setNumberOfOpenedCells,
+    isWin,
+    updateWin: setWin,
+    resetStates,
   };
 
   return (

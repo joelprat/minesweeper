@@ -4,9 +4,10 @@ import { useStore } from "../store/Store";
 import GameOver from "../components/GameOver";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Win from "../components/Win";
 
 export default function Play() {
-  const { table, isGameOver } = useStore();
+  const { table, isGameOver, isWin } = useStore();
   const nav = useNavigate();
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function Play() {
     >
       <GameTable table={table} />
       {isGameOver && <GameOver />}
+      {isWin && <Win />}
     </Box>
   );
 }

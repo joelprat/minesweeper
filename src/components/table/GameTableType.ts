@@ -30,7 +30,6 @@ export const generateBombsCoords = (size: number) => {
     const coordString = `${x},${y}`;
 
     if (!coords.has(coordString)) {
-      console.log(coordString);
       coords.add(coordString);
     }
   }

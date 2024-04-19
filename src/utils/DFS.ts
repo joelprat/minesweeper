@@ -12,7 +12,8 @@ function dfs(
     row < table.length &&
     column >= 0 &&
     column < table[row].length && // Corregir el chequeo de límites
-    !visited[row][column]
+    !visited[row][column] &&
+    table[row][column].status !== CellStatus.open
   ) {
     if (table[row][column].value === -1) return; // No necesitamos devolver contador aquí
     visited[row][column] = true;

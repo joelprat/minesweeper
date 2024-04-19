@@ -6,7 +6,10 @@ export interface StoreType {
   table: CellType[][];
   updateTable: React.Dispatch<React.SetStateAction<CellType[][]>>;
   isGameOver: boolean;
+  isWin: boolean;
   updateGameOver: (game: boolean) => void;
+  updateWin: (game: boolean) => void;
   numberOfOpenedCells: number;
   updateNumberOfOpenedCells: React.Dispatch<React.SetStateAction<number>>;
+  resetStates: () => void;
 }
