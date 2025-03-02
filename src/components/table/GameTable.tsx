@@ -1,39 +1,41 @@
-import React from "react";
 import Cell from "../cell/Cell";
-import { Box } from "@chakra-ui/react";
 import { CellType } from "../cell/CellType";
+import styled from "styled-components";
 
 interface GameTableProps {
   table: CellType[][];
 }
 
+const StyledTableBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 95%;
+  height: 95%;
+  gap: 12px;
+`;
+
+const StyledColumnBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 12px;
+`;
+
 export default function GameTable(props: GameTableProps) {
   return (
-    <Box
-      display="flex"
-      flexDirection="row"
-      alignItems="start"
-      justifyContent="start"
-      width="95%"
-      height="95%"
-    >
+    <StyledTableBox>
       {props.table.map((column, cIndex) => (
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          key={cIndex}
-          marginLeft={3}
-          marginRight={3}
-          w="25%"
-          h="100%"
-        >
+        <StyledColumnBox key={cIndex}>
           {column.map((cell, rIndex) => (
-            <Cell {...cell} />
+            <Cell {...cell} key={rIndex} />
           ))}
-        </Box>
+        </StyledColumnBox>
       ))}
-    </Box>
+    </StyledTableBox>
   );
 }

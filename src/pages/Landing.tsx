@@ -1,10 +1,42 @@
-import { Text, Heading, Select, Center, Box, Button } from "@chakra-ui/react";
+import { Text, Heading, Select, Center } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import useSetSizeSelector from "../store/selector/useSetSizeSelector";
 import { Link } from "react-router-dom";
 import useGenerateNewTable from "../store/selector/useGenerateNewTable";
 import { useStore } from "../store/Store";
 import { useEffect } from "react";
+import styled from "styled-components";
+
+const StyledLandingBox = styled.div`
+  width: 50%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+`;
+
+const StyledButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid black;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.5s, color 0.5s;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+`;
 
 export default function Landing() {
   const { size, updateGameOver } = useStore();
@@ -14,21 +46,11 @@ export default function Landing() {
   useEffect(() => {
     generateTable();
     updateGameOver(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Box
-      w="45vw"
-      h="45vw"
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      gap={5}
-      bg="rgba(255, 255, 255, 0.2)"
-      borderRadius={"15px"}
-      boxShadow="0px 0px 25px rgba(255, 255, 255, 0.5)"
-    >
+    <StyledLandingBox>
       <Heading as="h1" fontSize="4xl" fontWeight="bold">
         MINESWEEPER
       </Heading>
@@ -51,17 +73,11 @@ export default function Landing() {
           <option value={8}>8x8</option>
         </Select>
       </Center>
-      <Link to="/play" onClick={(e) => generateTable()}>
-        <Button
-          rightIcon={<ArrowForwardIcon />}
-          bg="transparent"
-          border="1px solid black"
-          _hover={{ bg: "black", color: "white" }}
-          transition="0.5s"
-        >
-          Start
-        </Button>
+      <Link to="/play" onClick={() => generateTable()}>
+        <StyledButton>
+          Start <ArrowForwardIcon style={{ marginLeft: "8px" }} />
+        </StyledButton>
       </Link>
-    </Box>
+    </StyledLandingBox>
   );
 }

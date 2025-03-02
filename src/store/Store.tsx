@@ -11,14 +11,14 @@ interface ContextProviderProps {
 const initialTable: CellType[][] = [];
 
 export function ContextProvider({ children }: ContextProviderProps) {
-  const [size, setSize] = useState<number>(4);
+  const [size, setSize] = useState<number>(8);
   const [table, setTable] = useState<CellType[][]>(initialTable);
   const [isGameOver, setGameOver] = useState<boolean>(false);
   const [isWin, setWin] = useState<boolean>(false);
   const [numberOfOpenedCells, setNumberOfOpenedCells] = useState<number>(0);
 
   const resetStates = () => {
-    setSize(4);
+    setSize(8);
     setTable(initialTable);
     setGameOver(false);
     setWin(false);

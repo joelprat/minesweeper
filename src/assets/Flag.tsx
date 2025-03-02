@@ -1,7 +1,7 @@
 export default function Flag() {
   return (
     <>
-      <svg width="100%" height="100%" viewBox="0 0 24 24">
+      <svg width="80%" height="80%" viewBox="0 0 24 24">
         <path
           fill-rule="evenodd"
           clip-rule="evenodd"
